@@ -10,7 +10,12 @@ from discord import app_commands
 from discord.ext import commands
 
 # ================= CONFIG =================
-TOKEN = ""
+TOKEN = os.environ.get("DISCORD_BOT_TOKEN", "")
+if not TOKEN:
+    raise RuntimeError(
+        "DISCORD_BOT_TOKEN environment variable is not set. "
+        "Please set it before running the bot."
+    )
 CHANNEL_NAME = "free-logger-stuff-shows-here"
 
 PROFILE_DIR = "roblox_profile"
@@ -233,5 +238,6 @@ async def list_artists(interaction: discord.Interaction):
     await interaction.response.send_message(msg)
 
 # ---------------- RUN ----------------
-bot.run(TOKEN)
+if __name__ == "__main__":
+    bot.run(TOKEN)
 
